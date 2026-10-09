@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>Semester GPA Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div class="hero-brand">
+        <a class="hero-logo-link" href="./" aria-label="Semester GPA Calculator home">
+          <svg class="hero-logo" viewBox="0 0 64 64" role="img" aria-label="GPA calculator logo" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="5" width="44" height="54" rx="9" fill="none" stroke="currentColor" stroke-width="4"/>
+            <rect x="18" y="13" width="28" height="12" rx="3" fill="currentColor" opacity=".22"/>
+            <path d="M23 19h8m5 0h3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3"/>
+            <circle cx="21" cy="34" r="3" fill="currentColor"/>
+            <circle cx="32" cy="34" r="3" fill="currentColor"/>
+            <circle cx="43" cy="34" r="3" fill="currentColor"/>
+            <circle cx="21" cy="46" r="3" fill="currentColor"/>
+            <circle cx="32" cy="46" r="3" fill="currentColor"/>
+            <path d="m40 46 3 3 6-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+          </svg>
+        </a>
+        <h1>Semester GPA Calculator</h1>
+      </div>
+      <p>Upload your marksheet, review the subjects, and calculate your semester results.</p>
+    </header>
+
+    <section class="panel">
+      <h2>Upload marksheet</h2>
+      <label class="upload-zone" for="fileInput">
+        <span class="upload-icon">↑</span>
+        <strong>Choose a marksheet file</strong>
+        <span>JPG, JPEG, PNG, WEBP or PDF</span>
+        <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.webp,.pdf,image/jpeg,image/png,image/webp,application/pdf">
+      </label>
+      <p class="hint">Your file is processed in this browser. OCR results can vary by marksheet quality and layout.</p>
+      <div id="previewWrap" class="preview-wrap hidden">
+        <h3>Uploaded marksheet</h3>
+        <img id="imagePreview" alt="Uploaded marksheet preview" class="preview-image hidden">
+        <canvas id="pdfPreview" class="preview-image hidden"></canvas>
+        <p id="fileName" class="hint"></p>
+        <button id="readButton" class="button primary full" disabled>🔍 Read Mark Sheet</button>
+      </div>
+      <div id="progressWrap" class="progress-wrap hidden">
+        <div class="progress-track"><div id="progressBar"></div></div>
+        <p id="progressText" class="hint">Preparing OCR…</p>
+      </div>
+      <div id="message" role="status" class="message hidden"></div>
+    </section>
+
+    <section id="detectedSection" class="panel hidden">
+      <details>
+        <summary>View detected text</summary>
+        <pre id="detectedText"></pre>
+      </details>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Review subjects</h2>
+          <p class="hint">Check the OCR results or enter your subjects manually.</p>
+        </div>
+        <button id="addRowButton" class="button secondary">＋ Add subject</button>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Subject</th><th>Credits</th><th>Grade Point</th><th aria-label="Actions"></th></tr></thead>
+          <tbody id="subjectRows"></tbody>
+        </table>
+      </div>
+      <p class="hint">Credits and grade points must be between 0 and 10. Each subject needs both values.</p>
+      <button id="calculateButton" class="button primary full">🧮 Calculate GPA &amp; Percentage</button>
+      <div id="resultError" class="message error hidden" role="alert"></div>
+    </section>
+
+    <section id="resultsSection" class="panel hidden">
+      <h2>Semester Results</h2>
+      <div class="metrics">
+        <div class="metric"><span>GPA</span><strong id="gpaResult">0.00</strong><small>Weighted grade point average</small></div>
+        <div class="metric"><span>Percentage</span><strong id="percentageResult">0.0%</strong><small>Using (GPA − 0.5) × 10</small></div>
+      </div>
+    </section>
+
+    <footer>Developed by <a href="https://www.linkedin.com/in/mohamed-imraan-full-stack-developer/" target="_blank" rel="noopener noreferrer">Mohamed Imraan</a></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
